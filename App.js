@@ -3,6 +3,8 @@ import { useState } from 'react';
 import CustomModal from './components/Modal';
 import AddItem from './components/AddItem';
 import List from './components/List';
+import Header from './components/Header/Header';
+import DashboardScreen from './pages/DashboardScreen';
 
 
 export default function App() {
@@ -38,30 +40,38 @@ export default function App() {
 
   }
   return (
-    <View style={styles.screen}>
-      <CustomModal
-        modalVisible={modalVisible}
-        itemSelected={itemSelected}
-        onHandlerDeleteItem={onHandlerDeleteItem}
-        onHandlerCompleteItem={onHandlerCompleteItem}
-       />
-      <AddItem
-        textItem ={textItem}
-        onHandlerAddItem= {onHandlerAddItem}
-        onHandlerChangeItem ={onHandlerChangeItem}
-      />
-      <List 
-        itemList ={itemList}
-        onHandlerModal={onHandlerModal}
-      />
+    <View style={styles.fullScreen}>
+
+      <Header title="MY APP"></Header>
+      <DashboardScreen/>
+      <View style={styles.body}>
+        <CustomModal
+          modalVisible={modalVisible}
+          itemSelected={itemSelected}
+          onHandlerDeleteItem={onHandlerDeleteItem}
+          onHandlerCompleteItem={onHandlerCompleteItem}
+        />
+        <AddItem
+          textItem ={textItem}
+          onHandlerAddItem= {onHandlerAddItem}
+          onHandlerChangeItem ={onHandlerChangeItem}
+        />
+        <List 
+          itemList ={itemList}
+          onHandlerModal={onHandlerModal}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  screen:{
-    padding:30
+  body:{
+    padding:30,
   },
+  fullScreen:{
+    alignItems: 'center'
+  }
   
   
 })
