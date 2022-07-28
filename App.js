@@ -5,7 +5,9 @@ import AddItem from './components/AddItem';
 import List from './components/List';
 import Header from './components/Header/Header';
 import DashboardScreen from './pages/DashboardScreen';
-
+import GameScreen from './pages/GameScreen';
+import {useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 
 export default function App() {
 
@@ -13,6 +15,22 @@ export default function App() {
   const [itemList, setItemList] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [itemSelected, setItemSelected] = useState({});
+  const [userNumber, setUserNumber] = useState();
+  const [loaded] = useFonts({
+    EduBold:require('./assets/fonts/EduVICWANTBeginner-Bold.ttf'),
+    EduRegular: require('./assets/fonts/EduVICWANTBeginner-Regular.ttf'),
+    EduMedium:require('./assets/fonts/EduVICWANTBeginner-Medium.ttf'),
+    EduSemiBold: require('./assets/fonts/EduVICWANTBeginner-SemiBold.ttf')
+  })
+
+  const handlerStartGame = selectedNumber => {
+    setUserNumber(selectedNumber)
+  }
+  let content = <DashboardScreen onStartGame={handlerStartGame} />
+  if(userNumber){
+    content = <GameScreen userOption={userNumber} />
+  }
+  if(!loaded) return <AppLoading/>
 
   const onHandlerDeleteItem = id => {
     setItemList(currentItems => currentItems.filter(item => item.id !== id))
@@ -43,7 +61,8 @@ export default function App() {
     <View style={styles.fullScreen}>
 
       <Header title="MY APP"></Header>
-      <DashboardScreen/>
+      {/* <DashboardScreen/> */}
+      {content}
       <View style={styles.body}>
         <CustomModal
           modalVisible={modalVisible}
